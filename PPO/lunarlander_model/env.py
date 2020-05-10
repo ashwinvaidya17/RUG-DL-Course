@@ -30,6 +30,7 @@ def get_old_prediction(actor_model_old,state_inp,dummy_old,dummy_advantage):
 def update_network(actor_model,actor_model_old):
     actor_model_old.set_weights(actor_model.get_weights())
 
+# choose actions
 def get_action(state_inp,actor_model,dummy_old,dummy_advantage,action_space,episode):
     action_val=actor_model.predict([state_inp,dummy_old,dummy_advantage],steps=1).flatten()
     count=0
@@ -68,7 +69,8 @@ def train_env(env,action_space,state_space,state,total_runs):
     dummy_old=np.zeros((1,action_space))
     dummy_advantage=np.zeros((1,1,1))
     s_writter=SummaryWriter("logs/")
-
+    
+    # initialise the network parameters
     actor_model=policy().actor_network(inp_dim=state_space,out_dim=action_space,n_actions=action_space)
     critic_model=policy().critic_network(inp_dim=state_space)
     actor_model_old=policy().actor_network(inp_dim=state_space,out_dim=action_space,n_actions=action_space)
