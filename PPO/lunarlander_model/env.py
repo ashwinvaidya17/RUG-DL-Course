@@ -18,12 +18,15 @@ import matplotlib as m
 from matplotlib import pyplot as plt
 
 
+# Load the save file 
 def load(filename):
     return load_model(filename)
 
+# predict - old actor model 
 def get_old_prediction(actor_model_old,state_inp,dummy_old,dummy_advantage):
     return actor_model_old.predict([state_inp,dummy_old,dummy_advantage],steps=1).flatten()
 
+# update the old actor network
 def update_network(actor_model,actor_model_old):
     actor_model_old.set_weights(actor_model.get_weights())
 
